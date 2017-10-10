@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <form class="well" #addCarForm="ngForm" novalidate (submit)="addTask($event)">
+      <div class="form-group">
+        <input [(ngModel)]="model" name="model" class="form-control" placeholder="Model..." required>
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="price" name="price" class="form-control" placeholder="Price..." required>
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="run" name="run" class="form-control" placeholder="Run..." required>
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="color" name="color" class="form-control" placeholder="Color..." required>
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="owner" name="owner" class="form-control" placeholder="Owner..." required>
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="city" name="city" class="form-control" placeholder="City..." required>
+      </div>
+      <button class="btn btn-danger" type="submit"
+              [disabled]="addCarForm.invalid">Add Car
+      </button>
+    </form>
+  </div>
+</div>
+
+
+<div *ngFor="let car of cars">
+  <ng-template [ngTemplateOutlet]="loadTemplate(car)"
+               [ngOutletContext]="{ $implicit: car}">
+  </ng-template>
+</div>
+
+<!--Template For Reading-->
+<ng-template #readOnlyTemplate let-car>
+  <!--Car Model-->
+  <div class="col-md-6 col-md-offset-1 text-right model">
+    {{car.model}}
+    <span *ngIf="car.isSold">(Sold)</span>
+  </div>
+
+  <!--Car Price-->
+  <div class="col-md-2 price">
+    {{car.price}}
+  </div>
+
+  <!--Buttons-->
+  <div class="col-md-3">
+    <input type="button" value="&ensp;Edit&ensp;" (click)="editCar(car)" class="btn btn-warning">
+    <input type="button" (click)="deleteCar(car._id)" value="Delete" class="btn btn-danger">
+  </div>
+
+  <div class="col-md-offset-1 view-box">
+    <!--Run Part-->
+    <div>
+      {{car.run}}
+    </div>
+    <!--Color Part-->
+    <div>
+      {{car.color}}
+    </div>
+    <!--Owner Part-->
+    <div>
+      {{car.owner}}
+    </div>
+    <!--City Part-->
+    <div>
+      City: {{car.city}}
+    </div>
+  </div>
+
+  <hr>
+</ng-template>
+
+<!--Template For Editing-->
+<ng-template #editTemplate>
+  <!--Car Id-->
+  <input type="hidden" [(ngModel)]="editedCar._id" readonly class="form-control">
+  <!--Car Model-->
+  <div class="col-md-6 col-md-offset-1 text-right model">
+    <input [(ngModel)]="editedCar.model" name="model" class="form-control" placeholder="Model..." required>
+  </div>
+
+  <!--Car Price-->
+  <div class="col-md-2 price">
+    <input [(ngModel)]="editedCar.price" name="price" class="form-control" placeholder="Price..." required>
+  </div>
+
+  <!--Buttons-->
+  <div class="col-md-3">
+
+    <input type="button" (click)="cancel()" value="Cancel" class="btn btn-primary">
+    <input type="button" (click)="updateStatus(editedCar)" value="Save" class="btn btn-success">
+  </div>
+
+  <div class="col-md-offset-1">
+    <!--Run Part-->
+    <div>
+      <input [(ngModel)]="editedCar.run" name="run" class="form-control" placeholder="Run..." required>
+    </div>
+    <!--Color Part-->
+    <div>
+      <input [(ngModel)]="editedCar.color" name="run" class="form-control" placeholder="Run..." required>
+    </div>
+    <!--Owner Part-->
+    <div>
+      <input [(ngModel)]="editedCar.owner" name="owner" class="form-control" placeholder="Owner..." required>
+    </div>
+    <!--City Part-->
+    <div>
+      <input [(ngModel)]="editedCar.city" name="city" class="form-control" placeholder="City..." required>
+    </div>
+    <!--Is Sold-->
+    <input type="checkbox" [(ngModel)]="editedCar.isSold"> Is sold?
+  </div>
+</ng-template>
+

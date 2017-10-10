@@ -1,0 +1,16 @@
+.model, .price {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 140%;
+  padding-left: 0;
+}
+button[type=submit] {
+  width: 25%;
+}
+input {
+  margin-bottom: 5px;
+}
+.view-box div {
+  margin-bottom: 10px;
+  font-size: 110%;
+}
